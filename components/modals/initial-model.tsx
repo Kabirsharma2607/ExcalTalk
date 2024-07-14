@@ -20,13 +20,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+import FileUpload from "@/components/file-upload";
+
 import axios from "axios";
 
 import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import FileUpload from "@/components/modals/file-upload";
+
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({

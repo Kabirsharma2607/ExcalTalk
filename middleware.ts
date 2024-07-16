@@ -12,6 +12,5 @@ export const config = {
     "/",
     "/(api|trpc)(.*)",
     "/api/uploadthing",
-    "https://utfs.io/",
   ],
 };

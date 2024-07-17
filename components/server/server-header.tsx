@@ -16,8 +16,6 @@ import {
   Settings2,
   Trash2,
   UserPlus,
-  Users2Icon,
-  UsersIcon,
   UsersRoundIcon,
 } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";

@@ -14,7 +14,8 @@ import {
   Video,
   Volume2,
 } from "lucide-react";
-import { channel } from "diagnostics_channel";
+import { Separator } from "../ui/separator";
+import { ServerSection } from "./server-section";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -130,6 +131,12 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             ]}
           />
         </div>
+        <Separator className="bg-zinc-200 dark:bg-zinc-700 rounded-md my-2" />
+        {!!textChannels?.length && (
+          <div className="mb-2">
+            <ServerSection />
+          </div>
+        )}
       </ScrollArea>
     </div>
   );

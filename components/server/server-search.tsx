@@ -10,6 +10,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "../ui/command";
+import { useParams, useRouter } from "next/navigation";
 
 interface ServerSearchProps {
   data: {
@@ -33,6 +34,23 @@ export const ServerSearch = ({ data }: ServerSearchProps) => {
       os = false;
     }
   }
+  const router = useRouter();
+  const params = useParams();
+  const onClick = ({
+    id,
+    type,
+  }: {
+    id: string;
+    type: "channel" | "member";
+  }) => {
+    setOpen(false);
+    if (type === "member") {
+      return router.push(`/servers/${params?.serverId}/conversations/${id}`);
+    }
+    if (type === "channel") {
+      return router.push(`/servers/${params?.serverId}/channels/${id}`);
+    }
+  };
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -69,13 +87,7 @@ export const ServerSearch = ({ data }: ServerSearchProps) => {
             return (
               <CommandGroup key={label} heading={label}>
                 {data.map(({ id, icon, name }) => (
-                  <CommandItem
-                    key={id}
-                    onClick={() => {
-                      console.log("Clicked " + name);
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
+                  <CommandItem key={id} onSelect={() => onClick({ id, type })}>
                     {icon}
                     <span>{name}</span>
                   </CommandItem>

@@ -29,7 +29,7 @@ export default function RootLayout({
     <ClerkProvider afterSignOutUrl="/">
       <Analytics />
       <SpeedInsights />
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" suppressHydrationWarning={true}>
         <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
           <ThemeProvider
             attribute="class"

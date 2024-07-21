@@ -1,6 +1,4 @@
 "use client";
-
-import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
@@ -18,6 +16,7 @@ interface MemberItemProps {
 
 export const MembersItem = ({ id, imageUrl, name, role }: MemberItemProps) => {
   const router = useRouter();
+  const params = useParams();
   const roleIconMap = {
     GUEST: <User className="h-4 w-4 ml-2 text-green-500" />,
     MODERATOR: <ShieldCheck className="h-4 w-4 ml-2 text-indigo-500" />,

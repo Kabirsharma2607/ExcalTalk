@@ -17,6 +17,7 @@ import {
 import { Separator } from "../ui/separator";
 import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
+import { MembersSidebar } from "../members/members-sidebar";
 
 interface ServerSidebarProps {
   serverId: string;

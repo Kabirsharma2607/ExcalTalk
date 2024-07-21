@@ -1,3 +1,4 @@
+import { MembersSidebar } from "@/components/members/members-sidebar";
 import { ServerSidebar } from "@/components/server/server-sidebar";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -40,6 +41,9 @@ const ServerIdLayout = async ({
         <ServerSidebar serverId={params.serverId} />
       </div>
       <main className="h-full md:pl-60">{children}</main>
+      <div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0 right-0">
+        <MembersSidebar serverId={params.serverId} />
+      </div>
     </div>
   );
 };

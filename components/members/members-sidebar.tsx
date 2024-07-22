@@ -49,13 +49,7 @@ export const MembersSidebar = async ({ serverId }: MembersSidebarProps) => {
       <ScrollArea className="flex-1 w-full">
         {server?.members?.map((member) => (
           <div key={member.id} className="mb-4">
-            <MembersItem
-              id={member.profile.id}
-              name={member.profile.name}
-              imageUrl={member.profile.imageUrl}
-              role={member.role}
-              profileId={profile.id}
-            />
+            <MembersItem member={member} profileId={profile.id} />
           </div>
         ))}
       </ScrollArea>

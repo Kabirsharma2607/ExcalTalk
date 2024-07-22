@@ -1,28 +1,18 @@
 "use client";
-import { useParams, useRouter } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { ActionToolTip } from "@/components/action-tooltip";
 import { UserAvatar } from "../user-avatar";
 import { Crown, ShieldCheck, User } from "lucide-react";
-import { MemberRole } from "@prisma/client";
-import { profile } from "console";
+import { Member, MemberRole, Profile } from "@prisma/client";
 
 interface MemberItemProps {
-  id: string;
-  imageUrl: string;
-  name: string;
-  role: MemberRole;
   profileId: string;
+  member: Member & { profile: Profile };
 }
 
-export const MembersItem = ({
-  id,
-  imageUrl,
-  name,
-  role,
-  profileId,
-}: MemberItemProps) => {
+export const MembersItem = ({ profileId, member }: MemberItemProps) => {
   const router = useRouter();
   const params = useParams();
   const roleIconMap = {
@@ -31,11 +21,11 @@ export const MembersItem = ({
     ADMIN: <Crown className="h-4 w-4 ml-2 text-rose-500" />,
   };
   const onClick = () => {
-    if (profileId === id) {
+    if (profileId === member.profile.id) {
       // prevent navigating to the same conversation
       return null;
     }
-    router.push(`/servers/${params?.serverId}/conversations/${id}`);
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
     // prevent default link click behavior
   };
   return (
@@ -43,8 +33,8 @@ export const MembersItem = ({
       <ActionToolTip
         side="right"
         align="center"
-        label={name}
-        labelImage={roleIconMap[role]}
+        label={member.profile.name}
+        labelImage={roleIconMap[member.role]}
       >
         <button
           onClick={onClick}
@@ -53,11 +43,11 @@ export const MembersItem = ({
           <div
             className={cn(
               "absolute right-0  rounded-r-full transition-all w-[4px]",
-              role === MemberRole.GUEST &&
+              member.role === MemberRole.GUEST &&
                 "bg-green-500 text-primary rounded-[16px] h-[20px]",
-              role === MemberRole.MODERATOR &&
+              member.role === MemberRole.MODERATOR &&
                 "bg-white dark:bg-indigo-500 text-primary rounded-[16px] h-[20px]",
-              role === MemberRole.ADMIN &&
+              member.role === MemberRole.ADMIN &&
                 "bg-rose-500 text-primary rounded-[16px] h-[20px]"
             )}
           />
@@ -66,7 +56,10 @@ export const MembersItem = ({
               "relative group flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden items-center justify-center"
             )}
           >
-            <UserAvatar classname="h-[48px] w-[48px]" src={imageUrl} />
+            <UserAvatar
+              classname="h-[48px] w-[48px]"
+              src={member.profile.imageUrl}
+            />
           </div>
         </button>
       </ActionToolTip>

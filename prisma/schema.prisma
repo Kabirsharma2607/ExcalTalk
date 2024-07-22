@@ -66,6 +66,7 @@ model Member{
 
   messages Message[]
   directMessages DirectMessage[]
+  
   conversationInitiated Conversation[] @relation("MemberOne")
   conversationRecieved Conversation[] @relation("MemberTwo")
 
@@ -106,7 +107,9 @@ model Channel{
 model Message{
   id String @id @default(uuid())
   content String @db.Text
+
   fileUrl String? @db.Text
+
   memberId String
   member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 

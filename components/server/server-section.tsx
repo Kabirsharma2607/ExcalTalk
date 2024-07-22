@@ -9,7 +9,7 @@ interface ServerSectionProps {
   label: string;
   role?: MemberRole;
   sectionType: "channel" | "member";
-  channelType: ChannelType;
+  channelType?: ChannelType;
   server?: ServerWithMembersWithProfile;
 }
 
@@ -33,6 +33,16 @@ export const ServerSection = ({
             className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
           >
             <Plus className="h-4 w-4" />
+          </button>
+        </ActionToolTip>
+      )}
+      {role == MemberRole.ADMIN && sectionType === "member" && (
+        <ActionToolTip label="Settings">
+          <button
+            onClick={() => onOpen("members", { server })}
+            className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
+          >
+            <Settings className="h-4 w-4" />
           </button>
         </ActionToolTip>
       )}

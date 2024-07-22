@@ -41,7 +41,6 @@ export const MembersSidebar = async ({ serverId }: MembersSidebarProps) => {
     }
     return 0;
   });
-  //console.log(servers);
   return (
     <div className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#1E1F22] bg-indigo-500 py-3 text-white">
       <MembersAction server={server} />
@@ -55,6 +54,7 @@ export const MembersSidebar = async ({ serverId }: MembersSidebarProps) => {
               name={member.profile.name}
               imageUrl={member.profile.imageUrl}
               role={member.role}
+              profileId={profile.id}
             />
           </div>
         ))}

@@ -129,30 +129,32 @@ export const MembersModal = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent side="left">
                         <DropdownMenuSub>
-                          <DropdownMenuSubTrigger className="flex items-center">
+                          <DropdownMenuSubTrigger className="flex items-center justify-center">
                             <ShieldQuestion className="w-4 h-4 mr-2" />
                             <span>Role</span>
                           </DropdownMenuSubTrigger>
                           <DropdownMenuPortal>
                             <DropdownMenuSubContent>
                               <DropdownMenuItem
-                                onClick={() => onRoleChange(member.id, "GUEST")}
+                                onClick={() =>
+                                  onRoleChange(member.id, MemberRole.GUEST)
+                                }
                               >
                                 <User className="h-4 w-4 mr-2" />
                                 Guest
-                                {member.role === "GUEST" && (
+                                {member.role === MemberRole.GUEST && (
                                   <Check className="h-4 w-4 ml-auto" />
                                 )}
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 onClick={() =>
-                                  onRoleChange(member.id, "MODERATOR")
+                                  onRoleChange(member.id, MemberRole.MODERATOR)
                                 }
                               >
                                 <ShieldCheck className="h-4 w-4 mr-2" />
                                 Moderator
-                                {member.role === "MODERATOR" && (
-                                  <Check className="h-4 w-4 ml-auto" />
+                                {member.role === MemberRole.MODERATOR && (
+                                  <Check className="justify-center h-4 w-4 ml-2" />
                                 )}
                               </DropdownMenuItem>
                             </DropdownMenuSubContent>

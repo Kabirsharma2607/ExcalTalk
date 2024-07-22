@@ -6,21 +6,37 @@ import { ActionToolTip } from "@/components/action-tooltip";
 import { UserAvatar } from "../user-avatar";
 import { Crown, ShieldCheck, User } from "lucide-react";
 import { MemberRole } from "@prisma/client";
+import { profile } from "console";
 
 interface MemberItemProps {
   id: string;
   imageUrl: string;
   name: string;
   role: MemberRole;
+  profileId: string;
 }
 
-export const MembersItem = ({ id, imageUrl, name, role }: MemberItemProps) => {
+export const MembersItem = ({
+  id,
+  imageUrl,
+  name,
+  role,
+  profileId,
+}: MemberItemProps) => {
   const router = useRouter();
   const params = useParams();
   const roleIconMap = {
     GUEST: <User className="h-4 w-4 ml-2 text-green-500" />,
     MODERATOR: <ShieldCheck className="h-4 w-4 ml-2 text-indigo-500" />,
     ADMIN: <Crown className="h-4 w-4 ml-2 text-rose-500" />,
+  };
+  const onClick = () => {
+    if (profileId === id) {
+      // prevent navigating to the same conversation
+      return null;
+    }
+    router.push(`/servers/${params?.serverId}/conversations/${id}`);
+    // prevent default link click behavior
   };
   return (
     <div>
@@ -31,7 +47,7 @@ export const MembersItem = ({ id, imageUrl, name, role }: MemberItemProps) => {
         labelImage={roleIconMap[role]}
       >
         <button
-          onClick={() => {}}
+          onClick={onClick}
           className="group relative flex items-center justify-center"
         >
           <div

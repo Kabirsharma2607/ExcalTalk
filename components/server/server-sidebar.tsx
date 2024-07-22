@@ -18,9 +18,11 @@ import { Separator } from "../ui/separator";
 import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
 import { MembersSidebar } from "../members/members-sidebar";
+import { ServerMember } from "./server-member";
 
 interface ServerSidebarProps {
   serverId: string;
+  mobile?: boolean;
 }
 
 const iconMap = {
@@ -37,7 +39,10 @@ const roleIconMap = {
   [MemberRole.ADMIN]: <Crown className="h-4 w-4 mr-2 text-rose-500" />,
 };
 
-export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
+export const ServerSidebar = async ({
+  serverId,
+  mobile,
+}: ServerSidebarProps) => {
   const profile = await currentProfile();
   if (!profile) {
     return redirect("/");
@@ -79,10 +84,22 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   );
 
   // Filter members
-  const members = server?.members.filter(
-    (member) => member.profileId !== profile.id
-  );
-
+  server.members.sort((a, b) => {
+    if (a.role === MemberRole.ADMIN && b.role !== MemberRole.ADMIN) {
+      return -1;
+    }
+    if (a.role !== MemberRole.ADMIN && b.role === MemberRole.ADMIN) {
+      return 1;
+    }
+    if (a.role === MemberRole.MODERATOR && b.role !== MemberRole.MODERATOR) {
+      return -1;
+    }
+    if (a.role !== MemberRole.MODERATOR && b.role === MemberRole.MODERATOR) {
+      return 1;
+    }
+    return 0;
+  });
+  const members = server?.members;
   // Find role
   const role = server?.members.find(
     (member) => member.profileId === profile.id
@@ -186,6 +203,26 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                 server={server}
               />
             ))}
+          </div>
+        )}
+        {mobile && !!members.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="member"
+              role={role}
+              label="Members"
+              server={server}
+            />
+            <div className="space-y-[2px]">
+              {members.map((member) => (
+                <ServerMember
+                  key={member.id}
+                  member={member}
+                  server={server}
+                  profileId={profile.id}
+                />
+              ))}
+            </div>
           </div>
         )}
       </ScrollArea>

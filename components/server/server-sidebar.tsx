@@ -226,6 +226,9 @@ export const ServerSidebar = async ({
           </div>
         )}
       </ScrollArea>
+      <div className="hidden md:flex h-full w-[72px] z-20 flex-col fixed inset-y-0 right-0">
+        <MembersSidebar serverId={server.id} />
+      </div>
     </div>
   );
 };
